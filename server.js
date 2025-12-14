@@ -13,15 +13,21 @@ const app = express();
 connectDB();
 
 // Middleware
-app.use(
-  cors({
-    origin: [
-      'http://localhost:3000',
-      'https://ecocycle-mern-frontend.vercel.app'
-    ],
-    credentials: true
-  })
-);
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://ecocycle-mern-frontend.vercel.app'
+];
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    const isAllowed =
+      allowedOrigins.includes(origin) ||
+      /^https:\/\/.*\.vercel\.app$/.test(origin);
+    if (isAllowed) return callback(null, true);
+    return callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true
+}));
 
 
 app.use(express.json());
