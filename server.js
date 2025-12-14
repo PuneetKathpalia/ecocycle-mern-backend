@@ -10,7 +10,6 @@ const pickupRoutes = require('./routes/pickupRoutes');
 
 const app = express();
 
-// Connect DB
 connectDB();
 
 // Middleware
@@ -18,11 +17,12 @@ app.use(
   cors({
     origin: [
       'http://localhost:3000',
-      'https://ecocycle.vercel.app'
+      'https://ecocycle-mern-frontend.vercel.app'
     ],
     credentials: true
   })
 );
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
